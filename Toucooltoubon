@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Explorer France PRO - 50 villes</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Segoe UI, Arial, sans-serif; background-color: #f5f5f5; color: #333; }
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; text-align: center; padding: 2rem; }
+        .header h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .header p { font-size: 1.1rem; opacity: 0.9; }
+        .cities-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; padding: 1rem; }
+        .city-btn { background: #e3f2fd; border: none; padding: 1rem; border-radius: 8px; cursor: pointer; font-weight: bold; transition: background 0.3s; }
+        .city-btn:hover { background: #bbdefb; }
+        .city-btn.active { background: #2196f3; color: white; }
+        .restaurants { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; padding: 1rem; }
+        .restaurant-card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.1); transition: transform 0.3s; }
+        .restaurant-card:hover { transform: translateY(-5px); }
+        .restaurant-image { width: 100%; height: 200px; background: #ddd; display: flex; align-items: center; justify-content: center; color: #999; font-size: 0.9rem; }
+        .restaurant-info { padding: 1rem; }
+        .restaurant-name { font-size: 1.3rem; font-weight: bold; margin-bottom: 0.5rem; }
+        .rating { color: #ffc107; margin-bottom: 0.5rem; }
+        .price { color: #4caf50; font-weight: bold; margin-bottom: 0.5rem; }
+        .location { font-size: 0.9rem; color: #666; margin-bottom: 1rem; }
+        .reserve-btn { background: #4caf50; color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 6px; cursor: pointer; width: 100%; font-weight: bold; transition: background 0.3s; }
+        .reserve-btn:hover { background: #45a049; }
+        .gps-link { display: block; margin-top: 0.5rem; color: #2196f3; text-decoration: none; font-size: 0.9rem; text-align: center; }
+        .gps-link:hover { text-decoration: underline; }
+        @media (max-width: 768px) { .cities-grid { grid-template-columns: repeat(3, 1fr); } .restaurants { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Food Explorer France PRO</h1>
+        <p>Les meilleurs restaurants dans 50 villes – Réservation affiliée + Premium 15€/mois</p>
+    </div>
+
+    <div class="cities-grid" id="citiesGrid">
+        <button class="city-btn active" data-city="Paris">Paris</button>
+        <button class="city-btn" data-city="Lyon">Lyon</button>
+        <button class="city-btn" data-city="Marseille">Marseille</button>
+        <button class="city-btn" data-city="Toulouse">Toulouse</button>
+        <button class="city-btn" data-city="Nice">Nice</button>
+        <button class="city-btn" data-city="Bordeaux">Bordeaux</button>
+        <button class="city-btn" data-city="Lille">Lille</button>
+        <button class="city-btn" data-city="Strasbourg">Strasbourg</button>
+        <button class="city-btn" data-city="Nantes">Nantes</button>
+        <button class="city-btn" data-city="Montpellier">Montpellier</button>
+        <button class="city-btn" data-city="Rennes">Rennes</button>
+        <button class="city-btn" data-city="Grenoble">Grenoble</button>
+        <button class="city-btn" data-city="Rouen">Rouen</button>
+        <button class="city-btn" data-city="Toulon">Toulon</button>
+        <button class="city-btn" data-city="Angers">Angers</button>
+        <button class="city-btn" data-city="Dijon">Dijon</button>
+        <button class="city-btn" data-city="Nîmes">Nîmes</button>
+        <button class="city-btn" data-city="Avignon">Avignon</button>
+        <button class="city-btn" data-city="Clermont-Ferrand">Clermont-Ferrand</button>
+        <button class="city-btn" data-city="Le Mans">Le Mans</button>
+        <button class="city-btn" data-city="Aix-en-Provence">Aix-en-Provence</button>
+        <button class="city-btn" data-city="Brest">Brest</button>
+        <button class="city-btn" data-city="Tours">Tours</button>
+        <button class="city-btn" data-city="Nancy">Nancy</button>
+        <button class="city-btn" data-city="Limoges">Limoges</button>
+        <button class="city-btn" data-city="Annecy">Annecy</button>
+        <button class="city-btn" data-city="Perpignan">Perpignan</button>
+        <button class="city-btn" data-city="Metz">Metz</button>
+        <button class="city-btn" data-city="Besançon">Besançon</button>
+        <button class="city-btn" data-city="Orléans">Orléans</button>
+        <button class="city-btn" data-city="Caen">Caen</button>
+        <button class="city-btn" data-city="Saint-Denis">Saint-Denis</button>
+        <button class="city-btn" data-city="Mulhouse">Mulhouse</button>
+        <button class="city-btn" data-city="Cannes">Cannes</button>
+        <button class="city-btn" data-city="Poitiers">Poitiers</button>
+        <button class="city-btn" data-city="Pau">Pau</button>
+        <button class="city-btn" data-city="Chambéry">Chambéry</button>
+        <button class="city-btn" data-city="Lorient">Lorient</button>
+        <button class="city-btn" data-city="Valence">Valence</button>
+        <button class="city-btn" data-city="Épinal">Épinal</button>
+        <button class="city-btn" data-city="Colmar">Colmar</button>
+        <button class="city-btn" data-city="Vichy">Vichy</button>
+        <button class="city-btn" data-city="Calais">Calais</button>
+        <button class="city-btn" data-city="Dunkerque">Dunkerque</button>
+        <button class="city-btn" data-city="Ajaccio">Ajaccio</button>
+        <button class="city-btn" data-city="Bastia">Bastia</button>
+        <button class="city-btn" data-city="Saint-Malo">Saint-Malo</button>
+        <button class="city-btn" data-city="Reims">Reims</button>
+        <button class="city-btn" data-city="Beauvais">Beauvais</button>
+        <button class="city-btn" data-city="Boulogne-Billancourt">Boulogne-Billancourt</button>
+    </div>
+
+    <div class="restaurants" id="restaurants">
+        <div class="restaurant-card">
+            <div class="restaurant-image">🗼 Photo du restaurant (remplace par URL réelle)</div>
+            <div class="restaurant-info">
+                <div class="restaurant-name">L'Ambroisie</div>
+                <div class="rating">★★★★★ (3 Michelin)</div>
+                <div class="price">€€€€</div>
+                <div class="location">9 Place des Vosges, Paris</div>
+                <button class="reserve-btn">Réserver une table</button>
+                <a href="https://www.google.com/maps/search/?api=1&query=L%27Ambroisie+9+Place+des+Vosges%2C+Paris" class="gps-link" target="_blank">📍 Ouvrir sur GPS</a>
+            </div>
+        </div>
+        <div class="restaurant-card">
+            <div class="restaurant-image">🍽️ Photo du restaurant (remplace par URL réelle)</div>
+            <div class="restaurant-info">
+                <div class="restaurant-name">Guy Savoy</div>
+                <div class="rating">★★★★★ (3 Michelin)</div>
+                <div class="price">€€€€</div>
+                <div class="location">Monnaie de Paris, Paris</div>
+                <button class="reserve-btn">Réserver une table</button>
+                <a href="https://www.google.com/maps/search/?api=1&query=Guy+Savoy+Monnaie+de+Paris%2C+Paris" class="gps-link" target="_blank">📍 Ouvrir sur GPS</a>
+            </div>
+        </div>
+        <div class="restaurant-card">
+            <div class="restaurant-image">🍴 Photo du restaurant (remplace par URL réelle)</div>
+            <div class="restaurant-info">
+                <div class="restaurant-name">Septime</div>
+                <div class="rating">★★★★☆</div>
+                <div class="price">€€€</div>
+                <div class="location">80 Rue de Charonne, Paris</div>
+                <button class="reserve-btn">Réserver une table</button>
+                <a href="https://www.google.com/maps/search/?api=1&query=Septime+80+Rue+de+Charonne%2C+Paris" class="gps-link" target="_blank">📍 Ouvrir sur GPS</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const restaurantsData = {
+            Paris: [
+                { name: "L'Ambroisie", rating: "★★★★★ (3 Michelin)", price: "€€€€", location: "9 Place des Vosges, Paris", image: "🗼 Photo du restaurant (remplace par URL réelle)", gps: "https://www.google.com/maps/search/?api=1&query=L%27Ambroisie+9+Place+des+Vosges%2C+Paris" },
+                { name: "Guy Savoy", rating: "★★★★★ (3 Michelin)", price: "€€€€", location: "Monnaie de Paris, Paris", image: "🍽️ Photo du restaurant (remplace par URL réelle)", gps: "https://www.google.com/maps/search/?api=1&query=Guy+Savoy+Monnaie+de+Paris%2C+Paris" },
+                { name: "Septime", rating: "★★★★☆", price: "€€€", location: "80 Rue de Charonne, Paris", image: "🍴 Photo du restaurant (remplace par URL réelle)", gps: "https://www.google.com/maps/search/?api=1&query=Septime+80+Rue+de+Charonne%2C+Paris" }
+            ],
+            Lyon: [
+                { name: "Paul Bocuse", rating: "★★★★★", price: "€€€€", location: "40 Rue de la Plage, Lyon", image: "🍲 Photo du restaurant (remplace par URL réelle)", gps: "https://www.google.com/maps/search/?api=1&query=Paul+Bocuse+40+Rue+de+la+Plage%2C+Lyon" },
+                // Ajoute plus de restos pour Lyon ici (ex: { name: "Autre Resto", ... })
+            ],
+            // Ajoute les autres villes comme ça : Marseille: [...], etc. (tu peux copier-coller et changer les noms)
+        };
+
+        document.querySelectorAll('.city-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.city-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const city = btn.dataset.city;
+                const container = document.getElementById('restaurants');
+                container.innerHTML = '';
+                (restaurantsData[city] || []).forEach(resto => {
+                    const card = `
+                        <div class="restaurant-card">
+                            <div class="restaurant-image">${resto.image}</div>
+                            <div class="restaurant-info">
+                                <div class="restaurant-name">${resto.name}</div>
+                                <div class="rating">${resto.rating}</div>
+                                <div class="price">${resto.price}</div>
+                                <div class="location">${resto.location}</div>
+                                <button class="reserve-btn">Réserver une table</button>
+                                <a href="${resto.gps}" class="gps-link" target="_blank">📍 Ouvrir sur GPS</a>
+                            </div>
+                        </div>
+                    `;
+                    container.innerHTML += card;
+                });
+            });
+        });
+
+        document.addEventListener('click', e => {
+            if (e.target.classList.contains('reserve-btn')) {
+                // Remplace par ton lien affilié réel (ex: TheFork)
+                window.open('https://www.thefork.com/reserve?resto=example', '_blank');
+            }
+        });
+    </script>
+</body>
+</html>
